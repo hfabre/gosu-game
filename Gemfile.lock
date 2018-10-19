@@ -1,0 +1,34 @@
+PATH
+  remote: ../gosu-animator
+  specs:
+    gosu-animator (0.1.0)
+      gosu
+
+PATH
+  remote: ../gosu-physics
+  specs:
+    gosu-physics (0.1.0)
+      gosu
+
+PATH
+  remote: ../gosu-tilemap
+  specs:
+    gosu-tilemap (0.1.0)
+      gosu
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    gosu (0.14.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  gosu
+  gosu-animator!
+  gosu-physics!
+  gosu-tilemap!
+
+BUNDLED WITH
+   1.16.1
