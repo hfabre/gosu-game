@@ -4,10 +4,13 @@ require "gosu/physics"
 
 class Player
   def initialize(x, y)
-    @physics_player = Gosu::Physics::BasePlayer.new(x, y, 29, 55)
+    @width = 29
+    @height = 55
+    @physics_player = Gosu::Physics::BasePlayer.new(x, y, @width, @height)
     @animator = Gosu::Animator.new
     @last_action = :idle
     @current_action = :idle
+    @direction = :right
     load_animations
   end
 
@@ -17,6 +20,7 @@ class Player
     @current_action = calculate_current_action
     @physics_player.update(dt)
     update_animation
+    update_direction
   end
 
   def button_down(id, dt)
@@ -44,7 +48,14 @@ class Player
   end
 
   def draw
-    @animator.draw(@current_action, @physics_player.body.x, @physics_player.body.y, scale_x: 0.125, scale_y: 0.125)
+    if @direction == :left
+      x = @physics_player.body.x + @width
+      scale_x = -0.125
+    else
+      x = @physics_player.body.x
+      scale_x = 0.125
+    end
+    @animator.draw(@current_action, x, @physics_player.body.y, scale_x: scale_x, scale_y: 0.125)
     @physics_player.draw
   end
 
@@ -66,6 +77,10 @@ class Player
     @animator << Gosu::Animation.new(:jump, jump_animation_images, replay: false)
     @animator << Gosu::Animation.new(:idle, idle_animation_images)
     @animator << Gosu::Animation.new(:fall, fall_animation_images)
+  end
+
+  def update_direction
+    @direction = @physics_player.body.speed_x.positive? ? :right : :left
   end
 
   def update_animation
