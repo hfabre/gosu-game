@@ -58,7 +58,7 @@ class Game < Gosu::Window
   def load_body_from_map
     @map.board.each_with_index do |line, y|
       line.each_with_index do |cell, x|
-        # TODO: arrange tile map so we don't ned this -1 anymore
+        # TODO: arrange tile map so we don't need this -1 anymore
         if cell != 0 && @map.tiles[cell - 1].collide?
           @bodies[:obstacles] << Gosu::Physics::Body.new(x * 32, y * 32, 32, 32, friction: 0.97)
         end

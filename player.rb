@@ -18,16 +18,8 @@ class Player
   def update(dt, obstacles)
     @last_action = @current_action
     @current_action = calculate_current_action
-    p "="*100
-    p "before gravity"
-    log_player
     @physics_player.body.apply_gravity(dt)
-    p "after gravity"
-    log_player
     handle_collisions(obstacles)
-    p "after collision"
-    log_player
-    p "="*100
     @physics_player.update(dt)
     update_animation
     update_direction
@@ -130,7 +122,6 @@ class Player
         when :bottom
           if @physics_player.body.speed_y > 0
             @physics_player.body.reset_speed_y
-            p "collide bottom to #{obstacle.x} - #{obstacle.y}"
             @physics_player.body.round_y!(32)
           end
           @physics_player.reset_jump!
@@ -139,13 +130,10 @@ class Player
           @physics_player.body.reset_speed_y if @physics_player.body.speed_y < 0
         when :right
           @physics_player.body.reset_speed_x if @physics_player.body.speed_x < 0
-          p "collide right to #{obstacle.x} - #{obstacle.y}"
         when :left
           @physics_player.body.reset_speed_x if @physics_player.body.speed_x > 0
-          p "collide left to #{obstacle.x} - #{obstacle.y}"
         end
       else
-        p "didn't collide"
         @physics_player.body.apply_air_friction
       end
     end
