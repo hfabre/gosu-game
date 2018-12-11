@@ -7,7 +7,7 @@ require_relative "./player"
 class Game < Gosu::Window
   def initialize
     super(800, 600)
-    self.caption = "Gosu game - #{Gosu::fps()}"
+    self.caption = "Gosu game - #{Gosu::fps()} fps"
 
     player_start_x = 64
     player_start_y = 64
@@ -19,12 +19,13 @@ class Game < Gosu::Window
     map_path = "./assets/map.yml"
     @map = Gosu::TileMap.new(self, map_path)
     @camera = Gosu::Camera.new(self, 800, 600, player_start_x, player_start_y, 0, 0, 1)
+    #@camera2 = Gosu::Camera.new(self, 200, 150, 200, 200, 450, 0, 1)
     @player = Player.new(400, 300, camera: @camera)
     load_body_from_map
   end
 
   def update
-    self.caption = "Gosu game - #{Gosu::fps()}"
+    self.caption = "Gosu game - #{Gosu::fps()} fps"
     self.close if button_down? Gosu::Button::KbEscape
     update_dt!
     @player.move_left(@dt) if self.button_down? Gosu::Button::KbD
@@ -47,7 +48,9 @@ class Game < Gosu::Window
 
   def draw
     @map.draw(@camera)
+    # @map.draw(@camera2)
     @camera.draw
+    # @camera2.draw
     @player.draw
     #@bodies[:obstacles].each(&:draw)
   end
